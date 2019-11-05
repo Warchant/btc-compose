@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  btcd:
+    image: kylemanna/bitcoind
+    ports:
+      - 12000:12000  # port
+      - 12001:12001  # rpcport
+    volumes:
+      - ./config/btc:/bitcoin/.bitcoin
+    entrypoint: []
+    command: bitcoind -deprecatedrpc=generate
+
+
+  explorer:
+    build: explorer
+    command: btc-rpc-explorer
+    ports:
+      - 3002:3002
+    environment:
+      - BTCEXP_COIN=BTC
+      - BTCEXP_HOST=0.0.0.0
+      - BTCEXP_PORT=3002
+      - BTCEXP_BITCOIND_HOST=btcd
+      - BTCEXP_BITCOIND_PORT=12001
+      - BTCEXP_BITCOIND_USER=user
+      - BTCEXP_BITCOIND_PASS=password
+    depends_on:
+      - btcd
