@@ -31,7 +31,7 @@ git clean -fdx
 ```
 This removes all unchecked data from git repo.
 
-#### use bitcoin-cli
+##### use bitcoin-cli
 
 ```
 docker-compose exec btcd bitcoin-cli <any cli options>
